@@ -1,3 +1,6 @@
-export const API_BASE_URL = import.meta.env.DEV
-  ? 'http://localhost:8080'
-  : import.meta.env.VITE_API_AWS_URL
+const ENABLE_MOCKS =
+  import.meta.env.VITE_ENABLE_MOCKS === "true";
+
+export const API_BASE_URL = ENABLE_MOCKS
+  ? ""
+  : import.meta.env.VITE_API_URL || "";

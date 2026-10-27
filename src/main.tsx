@@ -3,12 +3,12 @@ import { createRoot } from "react-dom/client";
 
 import App from "./App";
 import "./index.css";
+import { env } from "./lib/env";
 
 async function enableMocking() {
-  const shouldMock =
-    import.meta.env.DEV || import.meta.env.VITE_ENABLE_MOCKS === "true";
-  if (!shouldMock) return;
-
+  if (!env.enableMocks) {
+    return;
+  }
   const { worker } = await import("./mocks/browser");
   await worker.start({ onUnhandledFrame: "warn" });
 }
