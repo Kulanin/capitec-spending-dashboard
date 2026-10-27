@@ -5,7 +5,9 @@ function required(name: keyof ImportMetaEnv): string {
 }
 
 export const env = {
-  apiBaseUrl: import.meta.env.PROD
-    ? required('VITE_API_AWS_URL')
-    : import.meta.env.VITE_API_LOCAL_URL ?? 'http://localhost:8080',
+  enableMocks: import.meta.env.VITE_ENABLE_MOCKS === "true",
+  apiBaseUrl:
+    import.meta.env.VITE_ENABLE_MOCKS === "true"
+      ? ""
+      : required("VITE_API_URL"),
 } as const;
