@@ -18,7 +18,7 @@ import { formatDate, formatZAR } from "../../utils/formatters";
 
 import { renderCategoryIcon } from "../../utils/iconMapper";
 
-interface TransactionTableProps {
+export interface TransactionTableProps {
   transactions: Transaction[];
   totalCount: number;
   hasMore: boolean;
@@ -104,6 +104,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
           <div className="relative">
             <select
               value={filters.category}
+              aria-label="Categories"
               onChange={(e) =>
                 onFilterChange({ category: e.target.value, offset: 0 })
               }
@@ -181,7 +182,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
                   {formatDate(t.date)}
                 </td>
                 <td className="py-2.5 px-5 text-right font-bold text-gray-900 whitespace-nowrap text-sm tabular-nums">
-                  -{formatZAR(t.amount)}
+                  {formatZAR(-t.amount)}
                 </td>
               </tr>
             ))}
