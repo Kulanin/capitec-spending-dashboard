@@ -3,9 +3,8 @@
 import type { Formatter, NameType, ValueType } from "recharts/types/component/DefaultTooltipContent";
 import type { LabelFormatter } from "recharts/types/component/Label";
 
-// Using the 'en-US' locale with the 'ZAR' currency code intentionally here.
-// to fix issue with the comma (e.g., R 15 420,50 to R 15,420.50)
-const zarFormatter = new Intl.NumberFormat("en-US", {
+
+const zarFormatter = new Intl.NumberFormat("en-ZA", {
   style: "currency",
   currency: "ZAR",
   minimumFractionDigits: 2,
@@ -15,12 +14,16 @@ const zarFormatter = new Intl.NumberFormat("en-US", {
 
 export const formatZAR = (amount: number | null | undefined): string => {
   if (amount === null || amount === undefined || Number.isNaN(amount)) {
-    return zarFormatter.format(0).replace("ZAR", "R");
+    return "R0.00";
   }
 
-  return zarFormatter.format(amount).replace("ZAR", "R");
+  const formatted = zarFormatter.format(amount);
+  
+  return formatted
+    .replace(/\u00A0/g, " ")
+    .replace(/R\s/, "R")     
+    .replace(",", ".");     
 };
-
 export const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString("en-ZA", {
     day: "2-digit",
@@ -40,8 +43,27 @@ export const formatTooltipZAR = (name?:string): Formatter<ValueType, NameType> =
 
 export const formatPercentLabel = (): LabelFormatter => {
   return (value) => {
-    const numericValue = typeof value === "number" ? value : Number(value || 0);
+    const numericValue = typeof value === "number" ? value : Number(value);
+    
+    if (Number.isNaN(numericValue)) {
+      return "0%";
+    }
+    
     return `${numericValue}%`;
   };
 };
+
+
+export const getInitials = (name: string): string => {
+  if (!name) return "?";
+  
+  return name
+    .trim()
+    .split(/\s+/) 
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .substring(0, 2);
+};
+
 

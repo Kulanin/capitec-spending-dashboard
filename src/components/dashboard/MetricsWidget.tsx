@@ -21,7 +21,10 @@ export const MetricsWidget = ({ customerId, period }: MetricsWidgetProps) => {
 
   if (summaryLoading || profileLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full animate-pulse">
+      <div
+        data-testid="metrics-skeleton"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full animate-pulse"
+      >
         {[1, 2, 3, 4].map((i) => (
           <div
             key={i}

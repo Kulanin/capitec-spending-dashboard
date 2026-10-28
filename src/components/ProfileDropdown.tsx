@@ -1,19 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import type { CustomerProfile } from "../types/api";
-import { formatDate } from "../utils/formatters";
+import { formatDate, getInitials } from "../utils/formatters";
 
 interface ProfileDropdownProps {
   profile: CustomerProfile;
 }
-
-const getInitials = (name: string) => {
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .substring(0, 2);
-};
 
 export const ProfileDropdown = ({ profile }: ProfileDropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
