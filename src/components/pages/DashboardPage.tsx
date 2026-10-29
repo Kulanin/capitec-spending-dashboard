@@ -4,13 +4,13 @@ import { getDateRangeFromPeriod } from "../../utils/dateHelpers";
 import { GoalsWidget } from "../dashboard/GoalsWidget";
 import { MetricsWidget } from "../dashboard/MetricsWidget";
 import { TrendsWidget } from "../dashboard/TrendsWidget";
-import { DateRangeFilterContainer } from "../DateRangeFilterContainer";
+import { DateRangeFilterContainer } from "../filters/DateRangeFilterContainer";
 import { DashboardLayout } from "../layout/DashboardLayout";
 import { CategoryChartWidget } from "../transactions/CategoryChartWidget";
 import { TransactionsWidget } from "../transactions/TransactionsWidget";
 import { DashboardSkeleton } from "../ui/DashboardSkeleton";
 import { FullPageError } from "../ui/FullPageError";
-import { UserProfileWidget } from "../UserProfileWidget";
+import { UserProfileWidget } from "../layout/UserProfileWidget";
 
 export const DashboardPage = () => {
   const customerId = "12345";

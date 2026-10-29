@@ -1,7 +1,7 @@
 import { ArrowLeftRight, TrendingUp, Wallet, Tag } from "lucide-react";
-import type { CustomerProfile, SpendingSummary } from "../types/api";
-import { formatZAR } from "../utils/formatters";
-import { MetricCard } from "./ui/MetricCard";
+import type { CustomerProfile, SpendingSummary } from "../../types/api";
+import { formatZAR } from "../../utils/formatters";
+import { MetricCard } from "../ui/MetricCard";
 
 interface DashboardMetricsRowProps {
   profile: CustomerProfile;

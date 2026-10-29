@@ -1,4 +1,4 @@
-import type { CustomerProfile } from "../types/api";
+import type { CustomerProfile } from "../../types/api";
 import { ProfileDropdown } from "./ProfileDropdown";
 
 interface UserProfileWidgetProps {

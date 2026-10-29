@@ -1,6 +1,6 @@
 import { Home } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import { UserProfileWidget } from "../UserProfileWidget";
+import { UserProfileWidget } from "./UserProfileWidget";
 import type { CustomerProfile } from "../../types/api";
 
 interface SidebarProps {

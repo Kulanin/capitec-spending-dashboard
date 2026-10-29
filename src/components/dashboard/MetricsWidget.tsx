@@ -1,7 +1,7 @@
 import { useFetchCustomerProfile } from "../../hooks/useFetchCustomerProfile";
 import { useFetchSpendingSummary } from "../../hooks/useFetchSpendingSummary";
 import type { PeriodOption } from "../../types/api";
-import { DashboardMetricsRow } from "./../DashboardMetricsRow";
+import { DashboardMetricsRow } from "./DashboardMetricsRow";
 
 interface MetricsWidgetProps {
   customerId: string;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Info } from "lucide-react";
-import { formatZAR } from "../utils/formatters";
-import type { SpendingGoal } from "../types/api";
+import { formatZAR } from "../../../utils/formatters";
+import type { SpendingGoal } from "../../../types/api";
 
 interface SpendingGoalsProps {
   goals: SpendingGoal[];
