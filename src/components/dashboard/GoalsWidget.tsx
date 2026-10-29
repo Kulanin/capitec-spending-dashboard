@@ -1,7 +1,7 @@
 import { useFetchGoals } from "../../hooks/useFetchGoals";
-import { GoalsError } from "../GoalsError";
-import { GoalsSkeleton } from "../GoalsSkeleton";
-import { SpendingGoals } from "../SpendingGoalsProgress";
+import { GoalsError } from "./goals/GoalsError";
+import { GoalsSkeleton } from "./goals/GoalsSkeleton";
+import { SpendingGoals } from "./goals/SpendingGoalsProgress";
 
 export const GoalsWidget = ({ customerId }: { customerId: string }) => {
   const {

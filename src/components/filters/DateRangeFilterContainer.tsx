@@ -1,5 +1,5 @@
-import { useFetchFilters } from "../hooks/useFetchFilters";
-import { useDashboardFilters } from "../hooks/useDashboardFilters";
+import { useFetchFilters } from "../../hooks/useFetchFilters";
+import { useDashboardFilters } from "../../hooks/useDashboardFilters";
 import { DateRangeFilter } from "./DateRangeFilter";
 
 export const DateRangeFilterContainer = ({

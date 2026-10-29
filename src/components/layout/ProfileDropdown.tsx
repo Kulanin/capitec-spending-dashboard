@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import type { CustomerProfile } from "../types/api";
-import { formatDate, getInitials } from "../utils/formatters";
+import { formatDate, getInitials } from "../../utils/formatters";
+import type { CustomerProfile } from "../../types/api";
 
 interface ProfileDropdownProps {
   profile: CustomerProfile;
