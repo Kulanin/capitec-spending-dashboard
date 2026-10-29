@@ -16,7 +16,7 @@ export const DateRangeFilterContainer = ({
     );
   }
 
-  if (isError) {
+  if (isError || !data || !data.dateRangePresets) {
     return (
       <button
         onClick={() => refetch()}

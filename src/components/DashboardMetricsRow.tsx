@@ -12,20 +12,22 @@ export const DashboardMetricsRow = ({
   profile,
   summary,
 }: DashboardMetricsRowProps) => {
-  const isSpendUp = summary.comparedToPrevious.spentChange > 0;
+  const spentChange = summary?.comparedToPrevious?.spentChange ?? 0;
+  const transactionChange = summary?.comparedToPrevious?.transactionChange ?? 0;
+  const isSpendUp = spentChange > 0;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
       <MetricCard
         title="Total Account Spend"
-        value={formatZAR(profile.totalSpent)}
-        subtext={`${profile.accountType} Account - ${profile.currency}`}
+        value={formatZAR(profile?.totalSpent ?? 0)}
+        subtext={`${profile?.accountType} Account - ${profile?.currency}`}
         icon={<Wallet className="w-5 h-5" />}
       />
 
       <MetricCard
         title="Period Total Spend"
-        value={formatZAR(summary.totalSpent)}
+        value={formatZAR(summary?.totalSpent ?? 0)}
         subtext="Vs previous period"
         icon={<TrendingUp className="w-5 h-5" />}
         badge={
@@ -37,28 +39,28 @@ export const DashboardMetricsRow = ({
             }`}
           >
             {isSpendUp ? "↑ +" : "↓ "}
-            {Math.abs(summary.comparedToPrevious.spentChange)}%
+            {Math.abs(spentChange)}%
           </span>
         }
       />
 
       <MetricCard
         title="Transactions"
-        value={summary.transactionCount.toString()}
+        value={summary?.transactionCount ?? 0}
         subtext="Within selected period"
         icon={<ArrowLeftRight className="w-5 h-5" />}
         badge={
           <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-50 text-gray-600 border border-gray-200">
-            {summary.comparedToPrevious.transactionChange > 0 ? "+" : ""}
-            {summary.comparedToPrevious.transactionChange}%
+            {transactionChange > 0 ? "+" : ""}
+            {transactionChange}%
           </span>
         }
       />
 
       <MetricCard
         title="Top Category"
-        value={summary.topCategory || "None"}
-        subtext={`Avg. basket: ${formatZAR(summary.averageTransaction)}`}
+        value={summary?.topCategory || "None"}
+        subtext={`Avg. basket: ${formatZAR(summary?.averageTransaction ?? 0)}`}
         icon={<Tag className="w-5 h-5" />}
         badge={
           <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
