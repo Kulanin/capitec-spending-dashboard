@@ -26,7 +26,7 @@ export const TrendsWidget = ({
     );
   }
 
-  if (isError || !data) {
+  if (isError || !data || !data.trends) {
     return (
       <div className="bg-white p-5 rounded-xl border border-gray-200 h-full min-h-[350px] flex flex-col items-center justify-center text-center">
         <AlertCircle className="w-8 h-8 text-red-400 mb-3" />
