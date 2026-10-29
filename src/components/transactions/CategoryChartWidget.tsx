@@ -29,7 +29,13 @@ export const CategoryChartWidget = ({
     );
   }
 
-  if (isError || !data) {
+  if (
+    isError ||
+    !data ||
+    !data.categories ||
+    !data.dateRange ||
+    !data.totalAmount
+  ) {
     return (
       <div className="bg-white rounded-xl border border-red-100 p-4 shadow-sm flex flex-col items-center justify-center h-full min-h-[300px]">
         <p className="text-sm text-red-500 mb-4">Failed to load categories.</p>

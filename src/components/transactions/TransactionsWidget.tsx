@@ -30,7 +30,7 @@ export const TransactionsWidget: React.FC<{
     );
   }
 
-  if (isError || !data) {
+  if (isError || !data || !data.transactions || !data.pagination) {
     return (
       <div className="bg-white rounded-xl border border-red-200 shadow-sm p-6 text-center h-96 flex flex-col items-center justify-center">
         <p className="text-red-500 font-medium mb-4">
