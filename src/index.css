@@ -97,11 +97,8 @@ p {
   margin: 0;
 }
 
-
-
-.recharts-wrapper,
-.recharts-surface,
-.recharts-wrapper svg {
+.recharts-wrapper, .recharts-wrapper *:focus {
   outline: none !important;
-  -webkit-tap-highlight-color: transparent;
+  box-shadow: none !important;
+  border: none !important;
 }

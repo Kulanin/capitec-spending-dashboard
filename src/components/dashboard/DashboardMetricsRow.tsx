@@ -50,9 +50,15 @@ export const DashboardMetricsRow = ({
         subtext="Within selected period"
         icon={<ArrowLeftRight className="w-5 h-5" />}
         badge={
-          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-50 text-gray-600 border border-gray-200">
-            {transactionChange > 0 ? "+" : ""}
-            {transactionChange}%
+          <span
+            className={`text-xs font-semibold px-2 py-0.5 rounded-full bg-gray-50 text-gray-600 border border-gray-200 ${
+              transactionChange > 0
+                ? "bg-red-50 text-red-600 border-red-200"
+                : "bg-green-50 text-green-600 border-green-200"
+            }`}
+          >
+            {transactionChange > 0 ? "↑ +" : "↓ "}
+            {Math.abs(transactionChange)}%
           </span>
         }
       />

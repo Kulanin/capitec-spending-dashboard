@@ -49,7 +49,6 @@ const calculateStats = (
   const averageTransaction =
     transactionCount > 0 ? totalSpent / transactionCount : 0;
 
- 
   let topCategory = "None";
   let maxAmount = 0;
   Object.entries(categoryTotals).forEach(([cat, amt]) => {
@@ -124,7 +123,6 @@ export const handlers = [
         previousStats.transactionCount,
       );
 
-    
       const response: SpendingSummary = {
         period: period as PeriodOption,
         totalSpent: Number(currentStats.totalSpent.toFixed(2)),
@@ -148,7 +146,6 @@ export const handlers = [
       const url = new URL(request.url);
       const q = url.searchParams;
 
-    
       const limit = Math.min(
         MAX_LIMIT,
         Math.max(1, Number(q.get("limit") ?? DEFAULT_LIMIT) || DEFAULT_LIMIT),
@@ -159,7 +156,6 @@ export const handlers = [
       const endDate = q.get("endDate") ?? undefined;
       const sortBy = (q.get("sortBy") ?? "date_desc") as SortOption;
 
-     
       let result = [...mockTransactions.transactions];
 
       if (category && category !== "All") {
@@ -193,7 +189,6 @@ export const handlers = [
       };
       result.sort(sorters[sortBy] ?? sorters.date_desc);
 
-  
       const total = result.length;
       const page = result.slice(offset, offset + limit);
 
@@ -229,8 +224,7 @@ export const handlers = [
         finalStartDate = new Date(startDate);
         finalEndDate = new Date(endDate);
       } else {
-   
-        finalEndDate = new Date(); 
+        finalEndDate = new Date();
         finalStartDate = new Date();
 
         switch (period) {
@@ -249,7 +243,6 @@ export const handlers = [
         }
       }
 
-    
       const filterStartStr = getLocalDateString(finalStartDate);
       const filterEndStr = getLocalDateString(finalEndDate);
 
@@ -285,11 +278,10 @@ export const handlers = [
         totalAmount += txn.amount;
       });
 
-    
       const categories = Array.from(categoryMap.entries()).map(
         ([name, data]) => ({
           name,
-          amount: Number(data.amount.toFixed(2)), 
+          amount: Number(data.amount.toFixed(2)),
           transactionCount: data.transactionCount,
           color: data.color,
           icon: data.icon,
@@ -313,23 +305,25 @@ export const handlers = [
     },
   ),
 
-   http.get(
+  http.get(
     `${API_BASE_URL}/api/customers/:customerId/spending/trends`,
     async ({ request }) => {
       await delay(300);
 
       const url = new URL(request.url);
-      
+
       const rawMonths = Number(url.searchParams.get("months"));
       const monthsParam = Math.min(
         24,
-        Math.max(1, Number.isNaN(rawMonths) || rawMonths === 0 ? 12 : rawMonths)
+        Math.max(
+          1,
+          Number.isNaN(rawMonths) || rawMonths === 0 ? 12 : rawMonths,
+        ),
       );
-
 
       const startDate = new Date();
       startDate.setMonth(startDate.getMonth() - monthsParam + 1);
-      startDate.setDate(1); 
+      startDate.setDate(1);
       startDate.setHours(0, 0, 0, 0);
 
       const filterStartStr = getLocalDateString(startDate);
@@ -339,14 +333,13 @@ export const handlers = [
         return txDateStr >= filterStartStr;
       });
 
-  
       const trendMap = new Map<
         string,
         { totalSpent: number; transactionCount: number }
       >();
 
       result.forEach((txn) => {
-        const month = txn.date.slice(0, 7); 
+        const month = txn.date.slice(0, 7);
 
         const existing = trendMap.get(month) || {
           totalSpent: 0,
@@ -367,7 +360,7 @@ export const handlers = [
             (data.totalSpent / data.transactionCount).toFixed(2),
           ),
         }))
-        .sort((a, b) => a.month.localeCompare(b.month)); 
+        .sort((a, b) => a.month.localeCompare(b.month));
 
       return HttpResponse.json<SpendingTrendsResponse>({ trends });
     },
@@ -375,7 +368,15 @@ export const handlers = [
 
   http.get(`${API_BASE_URL}/api/customers/:customerId/profile`, async () => {
     await delay(300);
-    return HttpResponse.json<CustomerProfile>(mockProfile);
+    const lifetimeSpent = mockTransactions.transactions.reduce(
+      (sum, txn) => sum + txn.amount,
+      0,
+    );
+
+    return HttpResponse.json<CustomerProfile>({
+      ...mockProfile,
+      totalSpent: Number(lifetimeSpent.toFixed(2)),
+    });
   }),
 
   http.get(`${API_BASE_URL}/api/customers/:customerId/goals`, async () => {

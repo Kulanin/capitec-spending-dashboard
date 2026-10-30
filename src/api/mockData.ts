@@ -5,6 +5,7 @@ import type {
   GoalsResponse,
   SpendingSummary,
   SpendingTrendsResponse,
+  Transaction,
   TransactionsResponse,
 } from "../types/api";
 
@@ -27,78 +28,6 @@ export const mockSummary: SpendingSummary = {
   comparedToPrevious: {
     spentChange: 12.5,
     transactionChange: -3.2,
-  },
-};
-const today = new Date();
-const daysAgo = (days: number) => {
-  const d = new Date(today);
-  d.setDate(d.getDate() - days);
-  return d.toISOString();
-};
-
-export const mockTransactions: TransactionsResponse = {
-  transactions: [
-    {
-      id: "txn_123456",
-      date: daysAgo(2),
-      merchant: "Pick n Pay",
-      category: "Groceries",
-      amount: 245.8,
-      description: "Weekly groceries",
-      paymentMethod: "Credit Card",
-      icon: "shopping-cart",
-      categoryColor: "#FF6B6B",
-    },
-    {
-      id: "txn_123457",
-      date: daysAgo(30),
-      merchant: "Netflix",
-      category: "Entertainment",
-      amount: 199.0,
-      description: "Monthly subscription",
-      paymentMethod: "Debit Order",
-      icon: "film",
-      categoryColor: "#4ECDC4",
-    },
-    {
-      id: "txn_123458",
-      date: daysAgo(60),
-      merchant: "Engen QuickShop",
-      category: "Transportation",
-      amount: 650.0,
-      description: "Fuel fill-up",
-      paymentMethod: "Debit Card",
-      icon: "car",
-      categoryColor: "#45B7D1",
-    },
-    {
-      id: "txn_123459",
-      date: daysAgo(90),
-      merchant: "Nando's",
-      category: "Dining",
-      amount: 320.5,
-      description: "Dinner with friends",
-      paymentMethod: "Credit Card",
-      icon: "utensils",
-      categoryColor: "#F7DC6F",
-    },
-    {
-      id: "txn_123460",
-      date: daysAgo(30),
-      merchant: "Eskom Direct",
-      category: "Utilities",
-      amount: 458.7,
-      description: "Prepaid Electricity",
-      paymentMethod: "EFT",
-      icon: "zap",
-      categoryColor: "#85C1E9",
-    },
-  ],
-  pagination: {
-    total: 1250,
-    limit: 20,
-    offset: 0,
-    hasMore: true,
   },
 };
 
@@ -239,4 +168,64 @@ export const mockGoals: GoalsResponse = {
       status: "warning",
     },
   ],
+};
+
+
+const categories = [
+  { name: 'Groceries', color: '#FF6B6B', icon: 'shopping-cart', merchants: ['Pick n Pay', 'Checkers', 'Woolworths', 'Spar'] },
+  { name: 'Entertainment', color: '#4ECDC4', icon: 'film', merchants: ['Netflix', 'Spotify', 'Ster-Kinekor', 'Showmax'] },
+  { name: 'Transportation', color: '#45B7D1', icon: 'car', merchants: ['Uber', 'Engen QuickShop', 'Shell', 'Gautrain'] },
+  { name: 'Dining', color: '#F7DC6F', icon: 'utensils', merchants: ['Nando\'s', 'McDonald\'s', 'Ocean Basket', 'Kauai'] },
+  { name: 'Utilities', color: '#85C1E9', icon: 'zap', merchants: ['Eskom Direct', 'City of Cape Town', 'Vodacom', 'Afrihost'] },
+  { name: 'Shopping', color: '#BB8FCE', icon: 'shopping-bag', merchants: ['Takealot', 'Mr Price', 'Sportscene', 'Clicks'] },
+];
+
+
+const getRecentDate = (daysAgo: number) => {
+  const d = new Date();
+  d.setDate(d.getDate() - daysAgo);
+  // Randomize the time of day so they sort properly
+  d.setHours(Math.floor(Math.random() * 24), Math.floor(Math.random() * 60));
+  return d.toISOString();
+};
+
+// Generate 60 transactions spread over the last 365 days
+const generateTransactions = (): Transaction[] => {
+  const txs: Transaction[] = [];
+  
+  for (let i = 0; i < 60; i++) {
+    const category = categories[Math.floor(Math.random() * categories.length)];
+    const merchant = category.merchants[Math.floor(Math.random() * category.merchants.length)];
+    
+    // Spread dates: mostly recent, some old
+    let daysAgo = 0;
+    if (i < 15) daysAgo = Math.floor(Math.random() * 7); // 15 in the last 7 days
+    else if (i < 35) daysAgo = Math.floor(Math.random() * 30) + 7; // 20 in the last 30 days
+    else if (i < 50) daysAgo = Math.floor(Math.random() * 90) + 30; // 15 in the last 90 days
+    else daysAgo = Math.floor(Math.random() * 275) + 90; // 10 in the last year
+
+    txs.push({
+      id: `txn_${100000 + i}`,
+      date: getRecentDate(daysAgo),
+      merchant: merchant,
+      category: category.name,
+      amount: Number((Math.random() * 800 + 50).toFixed(2)),
+      description: `${category.name} purchase at ${merchant}`,
+      paymentMethod: Math.random() > 0.5 ? 'Credit Card' : 'Debit Order',
+      icon: category.icon,
+      categoryColor: category.color,
+    });
+  }
+
+  return txs.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+};
+
+export const mockTransactions: TransactionsResponse = {
+  transactions: generateTransactions(),
+  pagination: {
+    total: 60,
+    limit: 20,
+    offset: 0,
+    hasMore: true,
+  },
 };
