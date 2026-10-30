@@ -82,9 +82,10 @@ export const MonthlyTrendsChart: React.FC<MonthlyTrendsChartProps> = ({
               />
               <YAxis
                 stroke="#9ca3af"
-                fontSize={12}
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
+                tickFormatter={(value) => `R${value / 1000}k`}
               />
               <Tooltip
                 formatter={formatTooltipZAR("Total Spent")}
