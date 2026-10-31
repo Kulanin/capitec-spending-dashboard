@@ -388,4 +388,7 @@ export const handlers = [
     await delay(300);
     return HttpResponse.json<FilterPresetsResponse>(mockFilters);
   }),
+  http.get('/msw-heartbeat', () => {
+    return new HttpResponse(null, { status: 200 });
+  }),
 ];
