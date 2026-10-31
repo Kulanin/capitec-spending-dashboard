@@ -1,6 +1,7 @@
 import { useFetchCustomerProfile } from "../../hooks/useFetchCustomerProfile";
 import { useFetchSpendingSummary } from "../../hooks/useFetchSpendingSummary";
 import type { PeriodOption } from "../../types/api";
+import { WidgetError } from "../ui/WidgetError";
 import { DashboardMetricsRow } from "./DashboardMetricsRow";
 
 interface MetricsWidgetProps {
@@ -34,20 +35,13 @@ export const MetricsWidget = ({ customerId, period }: MetricsWidgetProps) => {
       </div>
     );
   }
-
   if (summaryError || !summary || !profile) {
     return (
-      <div className="w-full p-6 bg-red-50 rounded-xl border border-red-100 flex flex-col items-center justify-center text-center">
-        <p className="text-sm text-red-600 font-medium mb-3">
-          Failed to load metrics.
-        </p>
-        <button
-          onClick={() => refetchSummary()}
-          className="px-4 py-2 bg-white text-red-600 border border-red-200 rounded-lg text-sm font-semibold hover:bg-red-100 transition-colors"
-        >
-          Try Again
-        </button>
-      </div>
+      <WidgetError
+        title="Failed to load metrics."
+        onRetry={refetchSummary}
+        minHeight="min-h-[200px]"
+      />
     );
   }
 
