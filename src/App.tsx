@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DashboardPage } from "./components/pages/DashboardPage";
+import { MSWKeepAlive } from "./mocks/MSWKeepAlive";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -14,6 +15,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <MSWKeepAlive />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
