@@ -1,6 +1,7 @@
 import { useFetchFilters } from "../../hooks/useFetchFilters";
 import { useDashboardFilters } from "../../hooks/useDashboardFilters";
 import { DateRangeFilter } from "./DateRangeFilter";
+import { WidgetError } from "../ui/WidgetError";
 
 export const DateRangeFilterContainer = ({
   customerId,
@@ -18,13 +19,11 @@ export const DateRangeFilterContainer = ({
 
   if (isError || !data || !data.dateRangePresets) {
     return (
-      <button
-        onClick={() => refetch()}
-        className="flex items-center gap-2 text-sm text-red-600 bg-red-50 px-3 py-1.5 rounded-lg border border-red-100 hover:bg-red-100 transition-colors"
-      >
-        <span>Failed to load filters.</span>
-        <span className="font-semibold underline">Retry</span>
-      </button>
+      <WidgetError
+        title="Failed to load filters."
+        onRetry={refetch}
+        minHeight="min-h-[20px]"
+      />
     );
   }
 

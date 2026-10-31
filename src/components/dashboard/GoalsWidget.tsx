@@ -1,5 +1,5 @@
 import { useFetchGoals } from "../../hooks/useFetchGoals";
-import { GoalsError } from "./goals/GoalsError";
+import { WidgetError } from "../ui/WidgetError";
 import { GoalsSkeleton } from "./goals/GoalsSkeleton";
 import { SpendingGoals } from "./goals/SpendingGoalsProgress";
 
@@ -12,7 +12,14 @@ export const GoalsWidget = ({ customerId }: { customerId: string }) => {
   } = useFetchGoals(customerId);
 
   if (isLoading) return <GoalsSkeleton />;
-  if (isError || !goals) return <GoalsError onRetry={refetch} />;
+  if (isError || !goals)
+    return (
+      <WidgetError
+        title="Failed to load spending goals."
+        onRetry={refetch}
+        minHeight="min-h-[150px]"
+      />
+    );
 
   return <SpendingGoals goals={goals.goals} />;
 };

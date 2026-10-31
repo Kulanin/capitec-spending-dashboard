@@ -11,6 +11,7 @@ import { TransactionsWidget } from "../transactions/TransactionsWidget";
 import { DashboardSkeleton } from "../ui/DashboardSkeleton";
 import { FullPageError } from "../ui/FullPageError";
 import { UserProfileWidget } from "../layout/UserProfileWidget";
+import { WidgetErrorBoundary } from "../ui/WidgetErrorBoundary";
 
 export const DashboardPage = () => {
   const customerId = "12345";
@@ -28,7 +29,6 @@ export const DashboardPage = () => {
 
   return (
     <DashboardLayout profile={profile}>
-      {/* HEADER */}
       <header className="flex flex-row items-center justify-between w-full border-b border-gray-100 pb-5">
         <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-6">
           <div className="flex flex-col text-left">
@@ -39,7 +39,9 @@ export const DashboardPage = () => {
               Premium Account Overview
             </p>
           </div>
-          <DateRangeFilterContainer customerId={customerId} />
+          <WidgetErrorBoundary title="Failed to load filters.">
+            <DateRangeFilterContainer customerId={customerId} />
+          </WidgetErrorBoundary>
         </div>
         <div className="hidden md:block">
           <UserProfileWidget profile={profile} />
@@ -47,23 +49,48 @@ export const DashboardPage = () => {
       </header>
 
       <section className="flex flex-col gap-6 w-full">
-        <MetricsWidget period={period} customerId={customerId} />
+        <WidgetErrorBoundary
+          title="Failed to load metrics."
+          minHeight="min-h-[200px]"
+        >
+          <MetricsWidget period={period} customerId={customerId} />
+        </WidgetErrorBoundary>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
           <div className="lg:col-span-2">
-            <TrendsWidget customerId={customerId} period={period} />
+            <WidgetErrorBoundary
+              title="Failed to load spending trends."
+              minHeight="min-h-[350px]"
+            >
+              <TrendsWidget customerId={customerId} period={period} />
+            </WidgetErrorBoundary>
           </div>
           <div>
-            <CategoryChartWidget period={period} customerId={customerId} />
+            <WidgetErrorBoundary
+              title="Failed to load categories."
+              minHeight="min-h-[350px]"
+            >
+              <CategoryChartWidget period={period} customerId={customerId} />
+            </WidgetErrorBoundary>
           </div>
           <div className="col-span-full w-full my-4">
-            <GoalsWidget customerId={customerId} />
+            <WidgetErrorBoundary
+              title="Failed to load spending goals."
+              minHeight="min-h-[150px]"
+            >
+              <GoalsWidget customerId={customerId} />
+            </WidgetErrorBoundary>
           </div>
         </div>
-        <TransactionsWidget
-          customerId={customerId}
-          defaultStartDate={startDate}
-          defaultEndDate={endDate}
-        />
+        <WidgetErrorBoundary
+          title="Failed to load transactions."
+          minHeight="min-h-[400px]"
+        >
+          <TransactionsWidget
+            customerId={customerId}
+            defaultStartDate={startDate}
+            defaultEndDate={endDate}
+          />
+        </WidgetErrorBoundary>
       </section>
     </DashboardLayout>
   );

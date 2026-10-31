@@ -1,6 +1,7 @@
 import { useFetchSpendingCategories } from "../../hooks/useFetchSpendingCategories";
 import type { PeriodOption } from "../../types/api";
 import { CategoryPieChart } from "../charts/CategoryPieChart";
+import { WidgetError } from "../ui/WidgetError";
 
 interface CategoryChartWidgetProps {
   customerId: string;
@@ -37,15 +38,11 @@ export const CategoryChartWidget = ({
     !data.totalAmount
   ) {
     return (
-      <div className="bg-white rounded-xl border border-red-100 p-4 shadow-sm flex flex-col items-center justify-center h-full min-h-[300px]">
-        <p className="text-sm text-red-500 mb-4">Failed to load categories.</p>
-        <button
-          onClick={() => refetch()}
-          className="px-4 py-2 bg-red-50 text-red-600 rounded-lg text-sm font-semibold hover:bg-red-100 transition-colors"
-        >
-          Try Again
-        </button>
-      </div>
+      <WidgetError
+        title="Failed to load categories"
+        onRetry={refetch}
+        minHeight="min-h-[350px]"
+      />
     );
   }
 

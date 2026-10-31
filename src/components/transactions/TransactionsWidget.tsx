@@ -2,6 +2,7 @@ import React from "react";
 import { useFetchTransactions } from "../../hooks/useFetchTransactions";
 import { TransactionTable } from "./TransactionTable";
 import { useTransactionFilters } from "../../hooks/useTransactionFilters";
+import { WidgetError } from "../ui/WidgetError";
 
 export const TransactionsWidget: React.FC<{
   customerId: string;
@@ -32,17 +33,11 @@ export const TransactionsWidget: React.FC<{
 
   if (isError || !data || !data.transactions || !data.pagination) {
     return (
-      <div className="bg-white rounded-xl border border-red-200 shadow-sm p-6 text-center h-96 flex flex-col items-center justify-center">
-        <p className="text-red-500 font-medium mb-4">
-          Failed to load transactions.
-        </p>
-        <button
-          onClick={() => refetch()}
-          className="px-4 py-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 font-medium"
-        >
-          Try Again
-        </button>
-      </div>
+      <WidgetError
+        title="Failed to load transactions."
+        onRetry={refetch}
+        minHeight="min-h-[400px]"
+      />
     );
   }
 
