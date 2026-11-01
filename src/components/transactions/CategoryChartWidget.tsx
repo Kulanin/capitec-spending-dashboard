@@ -1,7 +1,14 @@
+import { lazy, Suspense } from "react";
 import { useFetchSpendingCategories } from "../../hooks/useFetchSpendingCategories";
 import type { PeriodOption } from "../../types/api";
-import { CategoryPieChart } from "../charts/CategoryPieChart";
 import { WidgetError } from "../ui/WidgetError";
+import { CategorySkeleton } from "../charts/CategorySkeleton";
+
+const CategoryPieChart = lazy(() =>
+  import("../charts/CategoryPieChart").then((module) => ({
+    default: module.CategoryPieChart,
+  })),
+);
 
 interface CategoryChartWidgetProps {
   customerId: string;
@@ -17,34 +24,23 @@ export const CategoryChartWidget = ({
     { period },
   );
 
-  if (isLoading) {
-    return (
-      <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm flex flex-col h-full min-h-[300px] animate-pulse">
-        <div className="h-6 w-1/2 bg-gray-200 rounded mb-4" />
-        <div className="h-36 w-36 bg-gray-100 rounded-full mx-auto my-4" />
-        <div className="grid grid-cols-2 gap-2 mt-auto">
-          <div className="h-8 bg-gray-100 rounded" />
-          <div className="h-8 bg-gray-100 rounded" />
-        </div>
-      </div>
-    );
-  }
-
-  if (
-    isError ||
-    !data ||
-    !data.categories ||
-    !data.dateRange ||
-    !data.totalAmount
-  ) {
+  if (isError || (!isLoading && (!data || !data.categories))) {
     return (
       <WidgetError
-        title="Failed to load categories"
+        title="Failed to load categories."
         onRetry={refetch}
         minHeight="min-h-[350px]"
       />
     );
   }
 
-  return <CategoryPieChart categories={data.categories} />;
+  return (
+    <Suspense fallback={<CategorySkeleton />}>
+      {isLoading || !data?.categories ? (
+        <CategorySkeleton />
+      ) : (
+        <CategoryPieChart categories={data.categories} />
+      )}
+    </Suspense>
+  );
 };
