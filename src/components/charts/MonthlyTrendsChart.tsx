@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -26,15 +26,17 @@ export const MonthlyTrendsChart: React.FC<MonthlyTrendsChartProps> = ({
 }) => {
   const [chartType, setChartType] = useState<ChartType>("bar");
 
-  const formattedData = trends.map((item) => {
-    const [year, month] = item.month.split("-");
-    const date = new Date(parseInt(year), parseInt(month) - 1, 1);
-    const monthName = date.toLocaleString("en-ZA", { month: "short" });
-    return {
-      ...item,
-      label: monthName,
-    };
-  });
+  const formattedData = useMemo(() => {
+    return trends.map((item) => {
+      const [year, month] = item.month.split("-");
+      const date = new Date(parseInt(year), parseInt(month) - 1, 1);
+      const monthName = date.toLocaleString("en-ZA", { month: "short" });
+      return {
+        ...item,
+        label: monthName,
+      };
+    });
+  }, [trends]);
 
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm flex flex-col h-full">
@@ -123,9 +125,10 @@ export const MonthlyTrendsChart: React.FC<MonthlyTrendsChartProps> = ({
               />
               <YAxis
                 stroke="#9ca3af"
-                fontSize={12}
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
+                tickFormatter={(value) => `R${value / 1000}k`}
               />
               <Tooltip
                 formatter={formatTooltipZAR("Total Spent")}
@@ -170,9 +173,10 @@ export const MonthlyTrendsChart: React.FC<MonthlyTrendsChartProps> = ({
               />
               <YAxis
                 stroke="#9ca3af"
-                fontSize={12}
+                fontSize={11}
                 tickLine={false}
                 axisLine={false}
+                tickFormatter={(value) => `R${value / 1000}k`}
               />
               <Tooltip
                 formatter={formatTooltipZAR("Total Spent")}
