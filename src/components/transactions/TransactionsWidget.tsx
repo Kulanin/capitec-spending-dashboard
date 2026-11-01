@@ -3,6 +3,7 @@ import { useFetchTransactions } from "../../hooks/useFetchTransactions";
 import { TransactionTable } from "./TransactionTable";
 import { useTransactionFilters } from "../../hooks/useTransactionFilters";
 import { WidgetError } from "../ui/WidgetError";
+import { TransactionTableSkeleton } from "./TransactionTableSkeleton";
 
 export const TransactionsWidget: React.FC<{
   customerId: string;
@@ -22,11 +23,7 @@ export const TransactionsWidget: React.FC<{
     useFetchTransactions(customerId, apiParams);
 
   if (isLoading) {
-    return (
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 animate-pulse h-96 flex items-center justify-center text-gray-400">
-        Loading transactions...
-      </div>
-    );
+    return <TransactionTableSkeleton />;
   }
 
   if (isError || !data) {
