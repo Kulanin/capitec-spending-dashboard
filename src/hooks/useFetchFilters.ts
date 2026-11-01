@@ -2,11 +2,12 @@ import { useQuery, type UseQueryResult } from "@tanstack/react-query";
 import type {  FilterPresetsResponse } from "../types/api";
 import { apiService } from "../api/client";
 import { customerKeys } from "../utils/queryKeys";
+import type { ApiError } from "../api/http";
 
 export const useFetchFilters = (
   customerId: string,
-): UseQueryResult<FilterPresetsResponse, any> => {
-  return useQuery<FilterPresetsResponse, any>({
+): UseQueryResult<FilterPresetsResponse, ApiError> => {
+  return useQuery<FilterPresetsResponse, ApiError>({
     queryKey: customerKeys.filters(customerId),
     queryFn: () => apiService.getFilters(customerId),
     staleTime: 60_000 * 2,
