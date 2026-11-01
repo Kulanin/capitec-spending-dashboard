@@ -18,10 +18,8 @@ export const TransactionsWidget: React.FC<{
     endDate: filters.endDate || defaultEndDate || undefined,
   };
 
-  const { data, isLoading, isError, refetch } = useFetchTransactions(
-    customerId,
-    apiParams,
-  );
+  const { data, isLoading, isFetching, isError, refetch } =
+    useFetchTransactions(customerId, apiParams);
 
   if (isLoading) {
     return (
@@ -31,7 +29,7 @@ export const TransactionsWidget: React.FC<{
     );
   }
 
-  if (isError || !data || !data.transactions || !data.pagination) {
+  if (isError || !data) {
     return (
       <WidgetError
         title="Failed to load transactions."
@@ -42,12 +40,16 @@ export const TransactionsWidget: React.FC<{
   }
 
   return (
-    <TransactionTable
-      transactions={data.transactions}
-      totalCount={data.pagination.total}
-      hasMore={data.pagination.hasMore}
-      filters={filters}
-      onFilterChange={setFilters}
-    />
+    <div
+      className={`transition-opacity duration-200 ${isFetching ? "opacity-50" : "opacity-100"}`}
+    >
+      <TransactionTable
+        transactions={data.transactions}
+        totalCount={data.pagination.total}
+        hasMore={data.pagination.hasMore}
+        filters={filters}
+        onFilterChange={setFilters}
+      />
+    </div>
   );
 };

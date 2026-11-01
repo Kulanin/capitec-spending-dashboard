@@ -1,23 +1,20 @@
-import { useQuery, type UseQueryResult } from "@tanstack/react-query";
-import type {  GetTransactionsParams, TransactionsResponse } from "../types/api";
+import { useQuery, keepPreviousData, type UseQueryResult } from "@tanstack/react-query";
+import type { GetTransactionsParams, TransactionsResponse } from "../types/api";
+import type { ApiError } from "../api/http";
 import { apiService } from "../api/client";
 import { customerKeys } from "../utils/queryKeys";
-
-
 
 export const useFetchTransactions = (
   customerId: string,
   params: GetTransactionsParams = {},
-): UseQueryResult<TransactionsResponse, any> =>(
-    useQuery<TransactionsResponse, any>({
+): UseQueryResult<TransactionsResponse, ApiError> => {
+  return useQuery<TransactionsResponse, ApiError>({
     queryKey: customerKeys.transactions(customerId, params),
     queryFn: () => apiService.getTransactions(customerId, params),
     staleTime: 2 * 60_000,
     gcTime: 5 * 60_000,
     retry: 2,
     enabled: Boolean(customerId),
-  })
-
-)
-
-
+    placeholderData: keepPreviousData,
+  });
+};
