@@ -1,8 +1,15 @@
 import { useFetchSpendingTrends } from "../../hooks/useFetchSpendingTrends";
-import { MonthlyTrendsChart } from "../charts/MonthlyTrendsChart";
 import { getMonthsFromPeriod } from "../../utils/dateHelpers";
 import type { PeriodOption } from "../../types/api";
 import { WidgetError } from "../ui/WidgetError";
+import { lazy, Suspense } from "react";
+import { ChartSkeleton } from "../charts/ChartSkeleton";
+
+const MonthlyTrendsChart = lazy(() =>
+  import("../charts/MonthlyTrendsChart").then((module) => ({
+    default: module.MonthlyTrendsChart,
+  })),
+);
 
 export const TrendsWidget = ({
   customerId,
@@ -18,15 +25,7 @@ export const TrendsWidget = ({
     monthsToFetch,
   );
 
-  if (isLoading) {
-    return (
-      <div className="bg-white p-5 rounded-xl border border-gray-200 h-full min-h-[300px] flex items-center justify-center animate-pulse">
-        <div className="h-68 w-full bg-gray-100 rounded-lg" />
-      </div>
-    );
-  }
-
-  if (isError || !data || !data.trends) {
+  if (isError || (!isLoading && !data)) {
     return (
       <WidgetError
         title="Failed to load spending trends."
@@ -36,5 +35,13 @@ export const TrendsWidget = ({
     );
   }
 
-  return <MonthlyTrendsChart trends={data.trends} />;
+  return (
+    <Suspense fallback={<ChartSkeleton />}>
+      {isLoading || !data ? (
+        <ChartSkeleton />
+      ) : (
+        <MonthlyTrendsChart trends={data.trends} />
+      )}
+    </Suspense>
+  );
 };
