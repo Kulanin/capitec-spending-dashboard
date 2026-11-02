@@ -54,6 +54,7 @@ export const MonthlyTrendsChart: React.FC<MonthlyTrendsChartProps> = ({
           <select
             value={chartType}
             onChange={(e) => setChartType(e.target.value as ChartType)}
+            aria-label="Trend chart type"
             className="appearance-none bg-gray-50 border border-gray-200 rounded-lg pl-3 pr-8 py-1.5 text-xs font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 cursor-pointer"
           >
             <option value="bar">Bar Chart</option>

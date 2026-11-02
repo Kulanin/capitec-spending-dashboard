@@ -72,6 +72,7 @@ export const CategoryPieChart: React.FC<CategoryPieChartProps> = ({
         <select
           value={chartView}
           onChange={(e) => setChartView(e.target.value as ChartView)}
+          aria-label="Category chart type"
           className="bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 text-xs font-semibold text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer flex-shrink-0"
         >
           <option value="donut">Donut Chart</option>
@@ -197,7 +198,7 @@ const CategoryBreakdownItem = ({ category }: CategoryBreakdownItemProps) => {
             {category.name}
           </span>
         </div>
-        <span className="text-[10px] font-semibold text-gray-400 shrink-0">
+        <span className="text-[10px] font-semibold text-gray-500 shrink-0">
           {category.percentage}%
         </span>
       </div>

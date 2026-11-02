@@ -14,7 +14,7 @@ export const FullPageError = ({
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-slate-50 p-4 text-center">
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 max-w-md w-full">
-        <div className="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+        <div className="w-12 h-12 bg-red-100 text-red-700 rounded-full flex items-center justify-center mx-auto mb-4">
           <AlertTriangle className="w-6 h-6" />
         </div>
 

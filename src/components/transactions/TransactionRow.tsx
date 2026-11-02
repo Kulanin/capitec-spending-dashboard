@@ -10,17 +10,18 @@ export const TransactionRow = React.memo(({ t }: { t: Transaction }) => {
         <div className="font-semibold text-gray-900 leading-tight">
           {t.merchant}
         </div>
-        <div className="text-[11px] text-gray-400 mt-0.5">{t.description}</div>
+        <div className="text-[11px] text-gray-500 mt-0.5">{t.description}</div>
       </td>
       <td className="py-2.5 px-4">
         <span
-          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold"
+          className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold text-gray-700"
           style={{
             backgroundColor: `${t.categoryColor}15`,
-            color: t.categoryColor,
           }}
         >
-          {renderCategoryIcon(t.icon, "w-3 h-3")}
+          <span style={{ color: t.categoryColor }}>
+            {renderCategoryIcon(t.icon, "w-3 h-3")}
+          </span>
           {t.category}
         </span>
       </td>

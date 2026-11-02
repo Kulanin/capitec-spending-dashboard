@@ -26,7 +26,7 @@ export const SpendingGoals: React.FC<SpendingGoalsProps> = ({
           <h3 className="text-sm font-bold text-gray-900 whitespace-nowrap">
             Spending Goals
           </h3>
-          <Info className="w-3.5 h-3.5 text-gray-400 cursor-pointer hover:text-gray-600 flex-shrink-0" />
+          <Info className="w-3.5 h-3.5 text-gray-500 cursor-pointer hover:text-gray-600 flex-shrink-0" />
         </div>
 
         <div className="space-y-4">
