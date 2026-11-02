@@ -25,7 +25,14 @@ export const DashboardPage = () => {
   const { startDate, endDate } = getDateRangeFromPeriod(period);
 
   if (isLoading) return <DashboardSkeleton />;
-  if (isError || !profile) return <FullPageError onRetry={refetch} />;
+  if (isError || !profile)
+    return (
+      <FullPageError
+        title="Unable to load account"
+        message="We couldn't retrieve your profile information. Please check your connection and try again."
+        onRetry={refetch}
+      />
+    );
 
   return (
     <DashboardLayout profile={profile}>
