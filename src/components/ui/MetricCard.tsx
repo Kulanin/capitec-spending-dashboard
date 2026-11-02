@@ -1,11 +1,9 @@
-import type { ReactNode } from "react";
-
 interface MetricCardProps {
   title: string;
-  value: string | number;
+  value: React.ReactNode;
   subtext?: string;
-  icon: ReactNode;
-  badge?: ReactNode;
+  icon: React.ReactNode;
+  badge?: React.ReactNode;
   valueClassName?: string;
 }
 
@@ -18,11 +16,11 @@ export const MetricCard = ({
   valueClassName = "text-2xl",
 }: MetricCardProps) => {
   return (
-    <dl className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between h-full min-w-0 transition-shadow hover:shadow-md">
+    <div className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex flex-col justify-between h-full min-w-0 transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
-        <dt className="text-sm font-medium text-gray-500 truncate mt-1">
+        <p className="text-sm font-medium text-gray-500 truncate mt-1">
           {title}
-        </dt>
+        </p>
         <div
           className="p-2.5 bg-blue-50 text-blue-600 rounded-lg shrink-0"
           aria-hidden="true"
@@ -30,8 +28,7 @@ export const MetricCard = ({
           {icon}
         </div>
       </div>
-
-      <dd className="mt-4 flex flex-col min-w-0">
+      <div className="mt-4 flex flex-col min-w-0">
         <div className="flex items-center gap-2 min-w-0">
           <div className="relative group max-w-full min-w-0">
             <span
@@ -67,11 +64,11 @@ export const MetricCard = ({
         </div>
 
         {subtext && (
-          <span className="text-xs font-medium text-gray-400 mt-1 truncate">
+          <span className="text-xs font-medium text-gray-500 mt-1 truncate">
             {subtext}
           </span>
         )}
-      </dd>
-    </dl>
+      </div>
+    </div>
   );
 };

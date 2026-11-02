@@ -66,7 +66,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
           {hasActiveFilters && (
             <button
               onClick={handleClearFilters}
-              className="flex items-center gap-1 text-[11px] font-semibold text-red-600 bg-red-50 hover:bg-red-100 px-2.5 py-1.5 rounded-lg transition-colors"
+              className="flex items-center gap-1 text-[11px] font-semibold text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1.5 rounded-lg transition-colors"
             >
               <X className="w-3 h-3" />
               Clear Filters
@@ -74,27 +74,29 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
           )}
 
           <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5 text-sm text-gray-700">
-            <Calendar className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-            <span className="text-[11px] font-medium text-gray-400">From</span>
+            <Calendar className="w-3.5 h-3.5 text-gray-500 flex-shrink-0" />
+            <span className="text-[11px] font-medium text-gray-500">From</span>
             <input
               type="date"
               value={filters.startDate || ""}
               onChange={(e) =>
                 onFilterChange({ startDate: e.target.value, offset: 0 })
               }
+              aria-label="From Date"
               className="bg-transparent text-xs font-medium text-gray-800 focus:outline-none cursor-pointer w-[115px]"
             />
           </div>
 
           <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-lg px-2.5 py-1.5 text-sm text-gray-700">
-            <Calendar className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-            <span className="text-[11px] font-medium text-gray-400">To</span>
+            <Calendar className="w-3.5 h-3.5 text-gray-500 flex-shrink-0" />
+            <span className="text-[11px] font-medium text-gray-500">To</span>
             <input
               type="date"
               value={filters.endDate || ""}
               onChange={(e) =>
                 onFilterChange({ endDate: e.target.value, offset: 0 })
               }
+              aria-label="To Date"
               className="bg-transparent text-xs font-medium text-gray-800 focus:outline-none cursor-pointer w-[115px]"
             />
           </div>
@@ -115,12 +117,13 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
               <option value="Dining">Dining</option>
               <option value="Utilities">Utilities</option>
             </select>
-            <Filter className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+            <Filter className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
           </div>
 
           <div className="relative">
             <select
               value={filters.sortBy}
+              aria-label="Sort transactions by"
               onChange={(e) =>
                 onFilterChange({
                   sortBy: e.target.value as SortOption,
@@ -134,7 +137,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
               <option value="amount_desc">Highest Amount</option>
               <option value="amount_asc">Lowest Amount</option>
             </select>
-            <ArrowUpDown className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
+            <ArrowUpDown className="w-3.5 h-3.5 absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
           </div>
         </div>
       </div>
@@ -157,7 +160,7 @@ export const TransactionTable: React.FC<TransactionTableProps> = ({
             {transactions.length === 0 && (
               <tr>
                 <td colSpan={5} className="py-12 text-center">
-                  <div className="flex flex-col items-center justify-center text-gray-400">
+                  <div className="flex flex-col items-center justify-center text-gray-500">
                     <SearchX className="w-8 h-8 mb-3 text-gray-300" />
                     <p className="text-sm font-medium text-gray-500">
                       No transactions found

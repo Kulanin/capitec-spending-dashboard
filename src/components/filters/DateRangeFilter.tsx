@@ -19,10 +19,11 @@ export const DateRangeFilter: React.FC<DateFilterProps> = ({
   return (
     <div className="relative inline-flex items-center">
       <div className="flex items-center bg-gray-50 border border-gray-200 rounded-lg p-1">
-        <Calendar className="w-4 h-4 ml-2 text-gray-400" />
+        <Calendar className="w-4 h-4 ml-2 text-gray-500" />
         <select
           value={selectedPeriod}
           onChange={(e) => onSelectPeriod(e.target.value)}
+          aria-label="Date range preset"
           className="bg-transparent border-none text-sm font-medium text-gray-700 pl-2 pr-8 py-1 focus:outline-none cursor-pointer"
         >
           {presets.map((preset) => (

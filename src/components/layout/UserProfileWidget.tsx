@@ -12,7 +12,7 @@ export const UserProfileWidget = ({ profile }: UserProfileWidgetProps) => {
         <span className="text-xs font-semibold text-gray-700">
           {profile.customerId}
         </span>
-        <span className="text-[10px] text-green-600 font-bold uppercase tracking-wider">
+        <span className="text-[10px] text-green-700 font-bold uppercase tracking-wider">
           Online Secure
         </span>
       </div>

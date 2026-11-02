@@ -38,7 +38,7 @@ export const WidgetError = ({
       {onRetry && (
         <button
           onClick={onRetry}
-          className={`cursor-pointer bg-red-50 text-red-600 font-semibold rounded-lg hover:bg-red-100 transition-colors shrink-0 ${
+          className={`cursor-pointer bg-red-50 text-red-700 font-semibold rounded-lg hover:bg-red-100 transition-colors shrink-0 ${
             isLargeWidget
               ? "px-4 py-2 text-sm mt-2"
               : "px-3 py-1 text-xs rounded-md"
