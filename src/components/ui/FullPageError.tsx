@@ -7,8 +7,8 @@ interface FullPageErrorProps {
 }
 
 export const FullPageError = ({
-  title = "Unable to load account",
-  message = "We couldn't retrieve your information. Please check your connection and try again.",
+  title = "Something went wrong",
+  message = "An unexpected error occurred. Please refresh the page or try again.",
   onRetry,
 }: FullPageErrorProps) => {
   return (
